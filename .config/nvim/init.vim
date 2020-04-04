@@ -1,4 +1,5 @@
 set encoding=utf-8
+
 " General settings {{{
     set nocompatible            " disable compatibility to old-time vi
     set showmatch               " show matching brackets.
@@ -48,14 +49,18 @@ set encoding=utf-8
 	let g:deoplete#enable_at_startup = 1
     Plug 'deoplete-plugins/deoplete-jedi'                             " For python completion
 
+    " Snippets
+    Plug 'SirVer/ultisnips'
+    Plug 'honza/vim-snippets'
+
     " themes, colors and information
     Plug 'rakr/vim-one'                                               " A theme
-    "Plug 'vim-airline/vim-airline'                                   " Status bar
-    "Plug 'vim-airline/vim-airline-themes'                            " themes for the status bar
-    Plug 'itchyny/lightline.vim'                                      " themes for the status bar
+    Plug 'vim-airline/vim-airline'                                   " Status bar
+    Plug 'vim-airline/vim-airline-themes'                            " themes for the status bar
     Plug 'ap/vim-css-color'                                           " themes for the status bar
-
-    " terminal and filesystem navigation
+    Plug 'ryanoasis/vim-devicons'                                   
+    
+    "terminal and filesystem navigation
     Plug 'kien/ctrlp.vim'
     Plug 'kassio/neoterm'
     Plug 'preservim/nerdtree'
@@ -78,7 +83,7 @@ set encoding=utf-8
 
 	set noshowmode                                                     " to quit the  --INSERTAR -- info because is in the lightline info bar
 
-" Searching configuration
+    " Searching configuration
 	" remap :CtrlP
 	let g:ctrlp_map = '<c-p>'
 	let g:ctrlp_cmd = 'CtrlP'
@@ -91,10 +96,10 @@ set encoding=utf-8
     set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 	
 	
-" Folding experience
+    " Folding experience
     
-   " NO FUNCIONA CORRECTAMENTE 
-"    augroup filetype_python
+    " NO FUNCIONA CORRECTAMENTE 
+    "augroup filetype_python
     " Python Folding
     "function! PYfold()
     "    return 1
@@ -103,8 +108,8 @@ set encoding=utf-8
     "autocmd FileType python setlocal foldmethod=indent
     "autocmd FileType javascript setlocal foldmethod=syntax
 "   augroup END
-
-    " Vim Script file settings ------------------------ {{{
+    let g:vimwiki_folding='expr'
+" Vim Script file settings ------------------------ {{{
     augroup filetype_vim
       autocmd!
       autocmd FileType vim setlocal foldmethod=marker
@@ -131,12 +136,18 @@ set encoding=utf-8
    highlight ColorColumn ctermbg=236 guibg=#303030
    let &colorcolumn=join(range(80,999),',')
 
+
+	"let g:lightline = {'colorscheme': 'one'}
+    "set guifont=Liberation\ Mono\ for\ Powerline\ 10 
+    let g:airline#extensions#tabline#enabled = 1
+    let g:airline_powerline_fonts = 1
+    let g:airline_powerline_symbols = 1
+    let g:webdevicons_enable_airline_tabline = 1
+    let g:webdevicons_enable_airline_statusline = 1
+
+
 " }}}
-
-	let g:lightline = {
-      \ 'colorscheme': 'one'}
-
-" Terminal customization
+    " Terminal customization
 " tions ----------------------------- {{{
 
 "    tnoremap <c-h> <C-\><C-n><C-w>h
@@ -173,20 +184,32 @@ set encoding=utf-8
 " }}}
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" NERDTree Customizations ----------------------------- 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Uncomment to autostart the NERDTree
-" autocmd vimenter * NERDTree
-" How can I close vim if the only window left open is a NERDTree?
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize = 25
-let g:NERDTreeShowBookmarks=1
-nnoremap <Leader>nn :NERDTreeToggle<Enter>
-nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
-autocmd VimEnter *
-            \   if !argc()
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " NERDTree Customizations ----------------------------- 
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Uncomment to autostart the NERDTree
+    " autocmd vimenter * NERDTree
+    " How can I close vim if the only window left open is a NERDTree?
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+    let NERDTreeMinimalUI = 1
+    let g:NERDTreeWinSize = 25
+    let g:NERDTreeShowBookmarks=1
+    nnoremap <Leader>nn :NERDTreeToggle<Enter>
+    nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
+
+
+    " Snippets configuration
+    let g:UltiSnipsEditSplit="vertical"
+    let g:UltiSnipsJumpForwardTrigger="<tab>"
+    let g:UltiSnipsExpandTrigger="<tab>"
+    let g:UltiSnipsJumpForwardTrigger="<c-b>"
+    let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+    
+    
+    
+    
+    autocmd VimEnter *
+                \   if !argc()
             \ |   Startify
             "\ |   NERDTree
             \ |   wincmd w
