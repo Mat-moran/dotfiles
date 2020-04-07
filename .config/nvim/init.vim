@@ -51,7 +51,11 @@ set encoding=utf-8
 
     " Snippets
     Plug 'SirVer/ultisnips'
-    Plug 'honza/vim-snippets'
+    "Plug 'honza/vim-snippets' " using your own snippets comment this!
+
+    " syntax 
+    Plug 'jiangmiao/auto-pairs'
+    Plug 'tpope/vim-surround'
 
     " themes, colors and information
     Plug 'rakr/vim-one'                                               " A theme
@@ -67,15 +71,15 @@ set encoding=utf-8
     Plug 'Xuyuanp/nerdtree-git-plugin'
     Plug 'mhinz/vim-startify'
 
-    " syntax 
-    Plug 'jiangmiao/auto-pairs'
-    Plug 'tpope/vim-surround'
 
     " others
     Plug 'vimwiki/vimwiki'
 
     " Git plugin
     Plug 'tpope/vim-fugitive'
+    " Linters
+    Plug 'neomake/neomake'
+
     " Initialize plugin system
     call plug#end()
     " }}}
@@ -197,17 +201,36 @@ set encoding=utf-8
     nnoremap <Leader>nn :NERDTreeToggle<Enter>
     nnoremap <silent> <Leader>nf :NERDTreeFind<CR>
 
-
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Text configuration
+    """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    
     " Snippets configuration
+    let g:UltiSnipsSnippetDirectories=[$HOME.'/.config/UltiSnips']
     let g:UltiSnipsEditSplit="vertical"
-    let g:UltiSnipsJumpForwardTrigger="<tab>"
     let g:UltiSnipsExpandTrigger="<tab>"
     let g:UltiSnipsJumpForwardTrigger="<c-b>"
     let g:UltiSnipsJumpBackwardTrigger="<c-z>"
     
-    
-    
-    
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " FUNCTIONS
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " Run linter on write
+    autocmd! BufWritePost * Neomake
+    fun! GoPy()
+        let g:neomake_python_python_maker = neomake#makers#ft#python#python()
+        let g:neomake_python_flake8_maker = neomake#makers#ft#python#flake8()
+        let g:neomake_python_python_maker.exe = 'python3 -m py_compile'
+        let g:neomake_python_flake8_maker.exe = 'python3 -m flake8'
+
+    endfun
+
+
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    " CALLS TO FUNCTION
+    """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+    autocmd FileType python :call GoPy()
+
     autocmd VimEnter *
                 \   if !argc()
             \ |   Startify
