@@ -1,0 +1,28 @@
+###########################   PYTHON ODOO SNIPETS NEOSNIPPET  ##################
+snippet o_ob
+class ${10:NewModule}(models.Model):
+  _name = "${20:module.name}"
+  _rec_name = "${30:module.rec_name}" # optional
+  _description = "${40:Module description}"
+  _order = "${50:field1}, ${60:field2}, " # optional
+
+  name = fields.Char()$70
+
+snippet o_obi
+class ${10:NewModule}(models.Model):
+  _name = "${20:module.name}" # optional
+  _inherit = "${30:module.name}"
+
+  name = fields.Char()$40
+
+# Odoo fields
+
+snippet odoo_field_integer
+${5:new_field} = fields.Integer(string="${10:Field name}", )
+
+
+
+
+###########################   PYTHON SNIPETS NEOSNIPPET  ##################
+snippet #!
+#!/usr/bin/env python3
