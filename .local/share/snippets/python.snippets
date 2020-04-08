@@ -1,24 +1,68 @@
 ###########################   PYTHON ODOO SNIPETS NEOSNIPPET  ##################
-snippet o_ob
-class ${10:NewModule}(models.Model):
-  _name = "${20:module.name}"
-  _rec_name = "${30:module.rec_name}" # optional
-  _description = "${40:Module description}"
-  _order = "${50:field1}, ${60:field2}, " # optional
 
-  name = fields.Char()$70
 
-snippet o_obi
-class ${10:NewModule}(models.Model):
-  _name = "${20:module.name}" # optional
-  _inherit = "${30:module.name}"
+# Odoo models
 
-  name = fields.Char()$40
+snippet odmo
+  class ${10:NewModule}(models.Model):
+    _name = "${20:module.name}"
+    _rec_name = "${30:module.rec_name}" # optional
+    _description = "${40:Module description}"
+    _order = "${50:field1}, ${60:field2}, " # optional
+
+    name = fields.Char()$70
+
+snippet odmo_inherit
+  class ${10:NewModule}(models.Model):
+    _name = "${20:module.name}" # optional
+    _inherit = "${30:module.name}"
+    
+    name = fields.Char()$40
+
 
 # Odoo fields
 
-snippet odoo_field_integer
-${5:new_field} = fields.Integer(string="${10:Field name}", )
+snippet odfi_Integer
+  ${5:new_field} = fields.Integer(string="${10:Field name}", )
+
+snippet odfi_float
+  ${5:new_field} = fields.Float(string="${10:Field name}", )
+
+snippet odfi_char
+  ${5:new_field} = fields.Char(string="${10:Field name}", )
+
+snippet odfi_text
+  ${5:new_field} = fields.Text(string="${10:Field name}", )
+
+snippet odfi_o2m
+  ${10:new_field_ids} = fields.One2many(
+    string="${20:Field name}",
+    comodel_name="${30:res.partner}",
+    inverse_name="${40:inverse_name_id}",
+    domain="[('${50:field}', '${51:=}', ${52:other})]",
+    context={"${60:key}": ${61:"value"}},
+    help="${70:Explain your field}.")
+
+snippet odfi_m2o
+  ${10:new_field_ids} = fields.Many2one(
+    string="${20:Field name}",
+    comodel_name="${30:res.partner}",
+    inverse_name="${40:inverse_name_id}",
+    domain="[('${50:field}', '${51:=}', ${52:other})]",
+    context={"${60:key}": ${61:"value"}},
+ 
+snippet odfi_m2m
+  ${10:new_field_ids} = fields.Many2one(
+    string = "${20:Field name}",
+    comodel_name = "${30:res.partner}",
+    relation = "${35:relation_table_name}",
+    column1 = "${36:column_this}",
+    column2= "${37:column_other}",
+    domain="[('${50:field}', '${51:=}', ${52:other})]",
+    context = {"${60:key}": ${61:"value"}},
+    help = "${70:Explain your field}.")
+
+
 
 
 
